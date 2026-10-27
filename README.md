@@ -20,4 +20,4 @@ Para compilar las soluciones se utiliza un archivo llamado Makefile en donde al 
 
 ## Justificación de utilización de STL
 
-El código se realizó con la ayuyda de las STL (Standard Template Library) disponibles en c++, lo que quiere decir que no se realizaron las funciones desde cero, lo que nos facilitó la estructuración del código
+El código se realizó con la ayuyda de las STL (Standard Template Library) disponibles en c++, lo que quiere decir que no se realizaron las funciones desde cero, lo que nos facilitó la estructuración del código.
