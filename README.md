@@ -1,6 +1,6 @@
 # INFO088-Taller-de-ingeniería-Estructura-de-datos-y-algoritmos
 
-## Integrantes:
+### Integrantes:
 
 -Gustavo Martinez
 -Sebastian Pohl
