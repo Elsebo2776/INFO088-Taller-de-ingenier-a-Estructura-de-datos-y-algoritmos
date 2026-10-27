@@ -5,22 +5,16 @@
 #include <fstream>
 #include <string>
 #include <chrono>
-#include "solucion1.cpp"
-#include "solucion2.cpp"
 
 using namespace std;
 
 typedef unsigned char uchar;
 
-#define OVERHEAD_PCT 0.25
+#define colchon 0.25
 
-// ============================================================================
-// FUNCIONES DE COMPARACIÓN CARÁCTER A CARÁCTER Y MEMORIA DINÁMICA
-// (Estilo 04 Estructturas.pdf pág. 5 y 02 Funciones Arreglos.pdf pág. 6)
-// ============================================================================
-
-// Compara carácter a carácter si 'a' es menor que 'b' en orden ASCII
-bool menorLexicografico(const uchar* a, const uchar* b) {
+// funcion menor_palabra: esta funcion es comparar la palabra con la palabra siguiente y te indica  cual de las 2 van primero en orden ASCII.
+// no mueve, solo va, mira e indica si la palabra esta bien en ese lugar o no.
+bool menor_palabra(const uchar* a, const uchar* b) {
     int i = 0;
     while (a[i] != '\0' && b[i] != '\0') {
         if (a[i] != b[i]) {
@@ -28,12 +22,12 @@ bool menorLexicografico(const uchar* a, const uchar* b) {
         }
         i++;
     }
-    // Si 'a' llegó a '\0' antes que 'b', 'a' es prefijo de 'b' y por tanto menor
     return (a[i] == '\0' && b[i] != '\0');
 }
 
-// Compara carácter a carácter si dos palabras uchar* son idénticas
-bool igualesLexicografico(const uchar* a, const uchar* b) {
+// funcion igual_palabra: esta  funcion es para determinar si las palabras "a" y "b" son una palabra iguales.
+// igualmente como la funcion anterior solo mira, no mueve ni nada.
+bool igual_palabras(const uchar* a, const uchar* b) {
     int i = 0;
     while (a[i] != '\0' && b[i] != '\0') {
         if (a[i] != b[i]) {
@@ -44,8 +38,9 @@ bool igualesLexicografico(const uchar* a, const uchar* b) {
     return (a[i] == '\0' && b[i] == '\0');
 }
 
-// Clona una palabra uchar* en memoria dinámica manualmente sin usar <cstring>
-uchar* copiarPalabraManual(const uchar* origen) {
+// funcion copiar_palabra: esta funcion observa si es igual la palabra que escogiste con alguna de la lista completa y la copia en una 
+//direción de memoria dinamica.
+uchar* copiar_palabra(const uchar* origen) {
     int largo = 0;
     while (origen[largo] != '\0') {
         largo++;
@@ -57,8 +52,9 @@ uchar* copiarPalabraManual(const uchar* origen) {
     return nueva;
 }
 
-// Convierte un string leído del archivo a un arreglo dinámico uchar*
-uchar* crearPalabraDesdeString(const string& str) {
+// funcion crear_palabra: Convierte un string leído del archivo a un arreglo dinámico en un uchar
+//con esto tenemos un "puente" entre la info que tiene la lista y como nosotros buscamos la info.
+uchar* crear_Palabra(const string& str) {
     int largo = str.length();
     uchar* nueva = new uchar[largo + 1];
     for (int i = 0; i < largo; i++) {
@@ -68,19 +64,15 @@ uchar* crearPalabraDesdeString(const string& str) {
     return nueva;
 }
 
-// ============================================================================
-// SOLUCIÓN 1: ARREGLO DINÁMICO ORDENADO
-// (Basado en StackArr de 08 Pilas Colas.pdf, BinarySearch de 06 e InsertionSort de 05)
-// ============================================================================
 
-class ArregloDinamicoOrdenado {
+class _ {
 private:
-    vector<uchar*> S; // Contenedor vector (nombrado S como en 08 Pilas Colas.pdf pág. 32)
-    int item;         // Cantidad actual de elementos en el arreglo
-    int cap;          // Capacidad máxima actual del vector
-    double overhead;  // Porcentaje de celdas adicionales al redimensionar
+    vector<uchar*> S; // contenedor vector (nombrado S como en 08 Pilas Colas.pdf pág. 32)
+    int item;         // cantidad actual de elementos en el arreglo
+    int cap;          // capacidad máxima actual del vector
+    double colchon;  // espacio adicional para que no exista un error por si faltan celdas
 
-    // Redimensiona copiando uno a uno los datos (08 Pilas Colas.pdf pág. 33)
+    // funcion reSize: ajusta la capacidad del arreglo dinamico copiando elementos cuando el espacio se agota
     void reSize(int newCap) {
         vector<uchar*> nuevoS(newCap);
         for (int i = 0; i < item; i++) {
@@ -90,7 +82,7 @@ private:
         cap = newCap;
     }
 
-    // Búsqueda Binaria iterativa exacta de 06 Binary Search.pdf (pág. 1)
+    // Búsqueda Binaria 
     int binarySearch(const uchar* x) {
         if (item == 0) return -1;
         int l, m, r;
@@ -98,10 +90,10 @@ private:
         r = item - 1;
         m = r / 2;
         while (l <= r) {
-            if (igualesLexicografico(x, S[m])) {
+            if (igual_palabras(x, S[m])) {
                 return m;
             } else {
-                if (menorLexicografico(x, S[m])) {
+                ool menor_palabra(x, S[m])) {
                     r = m - 1;
                 } else {
                     l = m + 1;
@@ -112,15 +104,16 @@ private:
         return -1;
     }
 
-public:
-    ArregloDinamicoOrdenado(int largoInicial = 16, double ovh = OVERHEAD_PCT) {
+
+    Arreglo_dinamico_ordenado(int largoInicial = 16, double ovh = colchon
+) {
         item = 0;
         cap = largoInicial;
-        overhead = ovh;
+        colchon = ovh;
         S = vector<uchar*>(cap);
     }
 
-    ~ArregloDinamicoOrdenado() {
+    destructor__() {
         for (int i = 0; i < item; i++) {
             delete[] S[i];
         }
@@ -131,40 +124,40 @@ public:
         return (pos != -1);
     }
 
-    // Inserción manteniendo el orden mediante corrimientos (05 Ordenamiento.pdf pág. 4)
+    // Inserción manteniendo el orden mediante corrimientos 
     bool insert(const uchar* x) {
-        // Si la clave ya existe en el diccionario, no se duplica
+        // antifuplicado :)
         if (binarySearch(x) != -1) {
             return false;
         }
 
-        // Si alcanzamos la capacidad máxima, aplicamos reSize con el overhead
+        // Si alcanzamos la capacidad máxima, aplicamos el reSize con el colchon
         if (item == cap) {
-            int extra = (int)(cap * overhead);
+            int extra = (int)(cap * colchon);
             if (extra == 0) extra = 1;
             reSize(cap + extra);
         }
 
-        // Corrimiento de elementos mayores de derecha a izquierda (Insertion Sort)
+        // Corrimiento de elementos mayores de derecha a izquierda (como debe ser)
         int j = item - 1;
-        while (j >= 0 && menorLexicografico(x, S[j])) {
+        while (j >= 0ool menor_palabra(x, S[j])) {
             S[j + 1] = S[j];
             j = j - 1;
         }
 
-        S[j + 1] = copiarPalabraManual(x);
+        S[j + 1] = copiar_palabra(x);
         item++;
         return true;
     }
 
-    // Eliminación desplazando los elementos hacia la izquierda
+    // localiza la palabra que se debe eliminar y verifica si existe o se la imagino el codigo jajaja.
     bool remove(const uchar* x) {
         int pos = binarySearch(x);
         if (pos == -1) {
             return false;
         }
 
-        delete[] S[pos]; // Liberamos la memoria dinámica de la palabra eliminada
+        delete[] S[pos]; // liberador de memoria dinamica
 
         for (int i = pos; i < item - 1; i++) {
             S[i] = S[i + 1];
@@ -177,11 +170,7 @@ public:
     int capacity() { return cap; }
 };
 
-// ============================================================================
-// SOLUCIÓN 2: LISTA CIRCULAR DOBLEMENTE ENLAZADA CON STL
-// (Basada en 07 Listas Enlazadas.pdf pág. 18 y pág. 30: std::list)
-// ============================================================================
-
+// ENTENDER MAÑANA**********************************************************************
 typedef list<uchar*>::iterator IteradorNodo;
 
 class ListaCircularSTL {
@@ -209,7 +198,7 @@ private:
 public:
     ListaCircularSTL() {}
 
-    ~ListaCircularSTL() {
+    destructor_ListaCircularSTL() {
         IteradorNodo it = l.begin();
         while (it != l.end()) {
             delete[] *it;
@@ -229,14 +218,14 @@ public:
             *P = l.begin();
         }
 
-        if (igualesLexicografico(**P, x)) {
+        if (igual_palabras(**P, x)) {
             return true;
         }
 
         // Regla de la pauta: si busca hacia adelante y x es menor que **P, reinicia al comienzo
-        if (direccion == 'D' && menorLexicografico(x, **P)) {
+        if (direccion == 'D'ool menor_palabra(x, **P)) {
             *P = l.begin();
-            if (igualesLexicografico(**P, x)) return true;
+            if (igual_palabras(**P, x)) return true;
         }
 
         IteradorNodo puntoPartida = *P;
@@ -252,16 +241,16 @@ public:
 
                 *P = sig;
 
-                if (igualesLexicografico(**P, x)) {
+                if (igual_palabras(**P, x)) {
                     return true;
                 }
-                if (menorLexicografico(x, **P)) {
+                ool menor_palabra(x, **P)) {
                     return false; // Como está ordenada, si nos pasamos ya no existe
                 }
             }
         } else {
             while (true) {
-                if (*P == l.begin() && menorLexicografico(x, **P)) {
+                if (*P == l.begin()ool menor_palabra(x, **P)) {
                     return false;
                 }
 
@@ -274,13 +263,13 @@ public:
 
                 *P = ant;
 
-                if (igualesLexicografico(**P, x)) {
+                if (igual_palabras(**P, x)) {
                     return true;
                 }
 
                 IteradorNodo ultimo = l.end();
                 --ultimo;
-                if (*P != ultimo && menorLexicografico(**P, x)) {
+                if (*P != ultimoool menor_palabra(**P, x)) {
                     return false;
                 }
             }
@@ -290,15 +279,15 @@ public:
     // Inserción ordenada en la lista
     bool insert(const uchar* x, IteradorNodo& P) {
         IteradorNodo it = l.begin();
-        while (it != l.end() && menorLexicografico(*it, x)) {
+        while (it != l.end()ool menor_palabra(*it, x)) {
             ++it;
         }
 
-        if (it != l.end() && igualesLexicografico(*it, x)) {
+        if (it != l.end() && igual_palabras(*it, x)) {
             return false; // No insertar duplicados
         }
 
-        uchar* copia = copiarPalabraManual(x);
+        uchar* copia = copiar_palabra(x);
         bool estabaVacia = l.empty();
 
         l.insert(it, copia);
@@ -312,11 +301,11 @@ public:
     // Eliminación cuidando que P no apunte a un nodo borrado
     bool remove(const uchar* x, IteradorNodo& P) {
         IteradorNodo it = l.begin();
-        while (it != l.end() && menorLexicografico(*it, x)) {
+        while (it != l.end()ool menor_palabra(*it, x)) {
             ++it;
         }
 
-        if (it != l.end() && igualesLexicografico(*it, x)) {
+        if (it != l.end() && igual_palabras(*it, x)) {
             if (it == P) {
                 ++P;
                 if (P == l.end()) {
@@ -336,11 +325,9 @@ public:
     int size() { return l.size(); }
 };
 
-// ============================================================================
-// LECTURA DE ARCHIVOS Y RUTINA PRINCIPAL (main)
-// ============================================================================
+// esta funcion se encarga de leer el archivo de las listas y cargar toooda esa info en un vector que tiene de info "uchar*"
 
-vector<uchar*> leerArchivoDiccionario(const string& ruta) {
+vector<uchar*> leer_Archivo_Diccionario(const string& ruta) {
     vector<uchar*> palabras;
     ifstream archivo(ruta);
     if (!archivo.is_open()) {
@@ -375,8 +362,8 @@ int main(int argc, char **argv) {
     }
 
     cout << "=== CARGANDO ARCHIVOS EN MEMORIA ===" << endl;
-    vector<uchar*> datosD1 = leerArchivoDiccionario(rutaD1);
-    vector<uchar*> datosD2 = leerArchivoDiccionario(rutaD2);
+    vector<uchar*> datosD1 =_(rutaD1);
+    vector<uchar*> datosD2 =_(rutaD2);
 
     int nD1 = datosD1.size();
     int nD2 = datosD2.size();
@@ -388,11 +375,12 @@ int main(int argc, char **argv) {
 
     cout << "Palabras leidas D1: " << nD1 << " | D2: " << nD2 << endl << endl;
 
-    ArregloDinamicoOrdenado sol1(16, OVERHEAD_PCT);
+    _ sol1(16, colchon
+);
     ListaCircularSTL sol2;
     IteradorNodo P = sol2.getInicio();
 
-    // 1. EXPERIMENTO DE CONSTRUCCIÓN (con D1.txt)
+    // 1. EXPERIMENTO DE CONSTRUCCIÓN 
     cout << "=== 1. CONSTRUCCION (D1.txt) ===" << endl;
     auto iniS1 = chrono::high_resolution_clock::now();
     for (int i = 0; i < nD1; i++) {
@@ -446,7 +434,7 @@ int main(int argc, char **argv) {
     }
     cout << endl;
 
-    // 3. EXPERIMENTO DE INSERCIÓN Y ELIMINACIÓN INTERCALADA (D2.txt)
+    // 3. EXPERIMENTO DE INSERCIÓN Y ELIMINACIÓN INTERCALADA 
     cout << "=== 3. INSERCION Y ELIMINACION INTERCALADA (D2.txt) ===" << endl;
     double msInsS1 = 0.0, msElimS1 = 0.0;
     for (int i = 0; i < nD2; i++) {
@@ -481,9 +469,9 @@ int main(int argc, char **argv) {
     cout << "[Solucion 1 - Vector] Insercion: " << msInsS1 << " ms | Eliminacion: " << msElimS1 << " ms" << endl;
     cout << "[Solucion 2 - Lista ] Insercion: " << msInsS2 << " ms | Eliminacion: " << msElimS2 << " ms" << endl;
 
-    // Liberar memoria dinámica solicitada con new[] (02 Funciones Arreglos.pdf pág. 6)
+    // Liberar memoria dinámica solicitada con new
     for (int i = 0; i < nD1; i++) delete[] datosD1[i];
     for (int i = 0; i < nD2; i++) delete[] datosD2[i];
 
     return EXIT_SUCCESS;
-}
+} 
