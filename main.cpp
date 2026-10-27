@@ -9,7 +9,7 @@
 
 using namespace std;
 
-// Función para leer los archivos D1.txt y D2.txt
+// esta funcion se encarga de leer el archivo de las listas y cargar toooda esa info en un vector que tiene de info "uchar*"
 vector<uchar*> leer_Archivo_Diccionario(const string& ruta) {
     vector<uchar*> palabras;
     ifstream archivo(ruta);
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
 
     cout << "Palabras leidas D1: " << nD1 << " | D2: " << nD2 << endl << endl;
 
-    ArregloDinamico sol1(16, colchon);
+    Arreglo_dinamico_ordenado sol1(16, colchon);
     ListaCircularSTL sol2;
     IteradorNodo P = sol2.getInicio();
 
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
     cout << "[Solucion 1 - Vector] Tiempo: " << msConstS1 << " ms | Elementos: " << sol1.size() << endl;
     cout << "[Solucion 2 - Lista ] Tiempo: " << msConstS2 << " ms | Elementos: " << sol2.size() << endl << endl;
 
-    // 2. EXPERIMENTO DE BÚSQUEDA
+    // 2. EXPERIMENTO DE BÚSQUEDA (usando rand() % nD1 como en 02 Funciones Arreglos.pdf)
     cout << "=== 2. BUSQUEDA (REP = " << REP << ") ===" << endl;
     int valoresK[4] = {8, 32, 128, 512};
 
@@ -151,7 +151,7 @@ int main(int argc, char **argv) {
     cout << "[Solucion 1 - Vector] Insercion: " << msInsS1 << " ms | Eliminacion: " << msElimS1 << " ms" << endl;
     cout << "[Solucion 2 - Lista ] Insercion: " << msInsS2 << " ms | Eliminacion: " << msElimS2 << " ms" << endl;
 
-    // Liberar memoria dinámica
+    // Liberar memoria dinámica solicitada con new
     for (int i = 0; i < nD1; i++) delete[] datosD1[i];
     for (int i = 0; i < nD2; i++) delete[] datosD2[i];
 
