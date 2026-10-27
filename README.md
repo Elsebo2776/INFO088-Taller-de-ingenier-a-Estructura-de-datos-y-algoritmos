@@ -14,7 +14,7 @@ Este trabajo consta de dos soluciones, la solución 1, usando arreglos dinamicos
 
 ## Instrucciones de compilación
 
-Para compilar las soluciones se utiliza un archivo llamado Makefile en donde al escribir "make" se ejecuta el código
+Para compilar las soluciones se utiliza un archivo llamado Makefile en donde al escribir "make" en la terminal de la dirección se ejecuta el código
 
 ## Funcionalidad del código
 
