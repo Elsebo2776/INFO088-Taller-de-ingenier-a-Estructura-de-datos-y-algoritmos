@@ -14,7 +14,7 @@ typedef list<uchar*>::iterator IteradorNodo;
 
 class ListaCircularSTL {
 private:
-    list<uchar*> l; // Contenedor std::list (nombrado l como en 07 Listas Enlazadas.pdf pág. 30)
+    list<uchar*> l; // Contenedor list
 
     // Mueve el iterador al nodo siguiente de forma circular
     void avanzarDerecha(IteradorNodo& it) {
@@ -24,7 +24,7 @@ private:
         }
     }
 
-    // Mueve el iterador al nodo anterior de forma circular (sin usar std::prev)
+    // Mueve el iterador al nodo anterior de forma circular
     void avanzarIzquierda(IteradorNodo& it) {
         if (it == l.begin()) {
             it = l.end();
@@ -49,7 +49,7 @@ public:
         return l.begin();
     }
 
-    // Búsqueda recibiendo el puntero P por dirección (02 Funciones Arreglos.pdf pág. 3)
+    // Búsqueda recibiendo el puntero P por dirección
     bool search(IteradorNodo* P, const uchar* x, char direccion) {
         if (l.empty()) return false;
 
