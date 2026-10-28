@@ -67,7 +67,7 @@ inline uchar* crear_Palabra(const string& str) {
 // Solución 1: Arreglo Dinámico Ordenado
 class Arreglo_dinamico_ordenado {
 private:
-    vector<uchar*> S; // contenedor vector (nombrado S como en 08 Pilas Colas.pdf pág. 32)
+    vector<uchar*> S; // contenedor vector
     int item;         // cantidad actual de elementos en el arreglo
     int cap;          // capacidad máxima actual del vector
     double colchon_val;  // espacio adicional para que no exista un error por si faltan celdas
