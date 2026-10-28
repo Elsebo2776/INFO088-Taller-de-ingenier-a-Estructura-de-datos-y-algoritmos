@@ -26,7 +26,7 @@ inline bool menor_palabra(const uchar* a, const uchar* b) {
 }
 
 // funcion igual_palabra: esta  funcion es para determinar si las palabras "a" y "b" son una palabra iguales.
-// igualmente como la funcion anterior solo mira, no mueve ni nada.
+// igualmente como la funcion anterior solo mira, no mueve.
 inline bool igual_palabras(const uchar* a, const uchar* b) {
     int i = 0;
     while (a[i] != '\0' && b[i] != '\0') {
