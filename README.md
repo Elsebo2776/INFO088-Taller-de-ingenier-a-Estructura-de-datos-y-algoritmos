@@ -18,6 +18,8 @@ Para compilar las soluciones se utiliza un archivo llamado Makefile en donde al 
 
 ## Funcionalidad del código
 
+Cada solución maneja un diccionario que ordenan, insertan y eliminan las estructuras de datos. Con el main se llaman las funciones de las soluciones y se mide el tiempo que toman los ordenamientos con los dos métodos.
+
 ## Justificación de utilización de STL
 
 El código se realizó con la ayuyda de las STL (Standard Template Library) disponibles en c++, lo que quiere decir que no se realizaron las funciones desde cero, lo que nos facilitó la estructuración del código.
