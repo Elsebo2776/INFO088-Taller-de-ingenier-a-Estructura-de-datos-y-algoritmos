@@ -10,7 +10,6 @@
 
 using namespace std;
 
-// ENTENDER MAÑANA**********************************************************************
 typedef list<uchar*>::iterator IteradorNodo;
 
 class ListaCircularSTL {
